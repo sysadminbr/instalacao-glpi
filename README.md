@@ -196,7 +196,8 @@ define('GLPI_LOG_DIR', '/var/log/glpi');
 4.3.2. Remover permanentemente  
 4.3.4. Configurar a url de acesso ao sistema em: Configurar -> Geral -> Configuração Geral -> URL da aplicação.  
 
-
+### 5. Referências
+https://faq.teclib.com/03_knowledgebase/procedures/install_glpi/
 
 	
 
