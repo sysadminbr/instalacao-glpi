@@ -75,7 +75,7 @@ sudo sed -i 's/^;date.timezone =/date.timezone = America\/Sao_Paulo/' /etc/php/8
 
 2.9. Criar o arquivo de configuração do servidor web (nginx) com o seguinte comando:  
 ```
-cat << "EOF" > /etc/nginx/nginx.conf
+cat << "EOF" > /tmp/nginx.conf
 user www-data;
 worker_processes auto;
 pid /run/nginx.pid;
@@ -110,6 +110,7 @@ http {
         }
 }
 EOF
+sudo mv /tmp/nginx.conf /etc/nginx/nginx.conf
 ```
 
 
