@@ -66,8 +66,8 @@ mysql -e "FLUSH PRIVILEGES;"
 
 # installing the glpi web app
 cd /var/www/html
-wget https://github.com/glpi-project/glpi/releases/download/10.0.19/glpi-10.0.19.tgz
-tar -xvzf glpi-10.0.19.tgz
+wget https://github.com/glpi-project/glpi/releases/download/11.0.4/glpi-11.0.4.tgz
+tar -xvzf glpi-11.0.4.tgz
 
 # downstream
 cat << 'EOF' > /var/www/html/glpi/inc/downstream.php
@@ -104,16 +104,6 @@ define('GLPI_THEMES_DIR', GLPI_VAR_DIR . '/_themes');
 define('GLPI_LOG_DIR', '/var/log/glpi');
 EOF
 
-# glpi initial setup
-sudo php /var/www/html/glpi/bin/console db:install \
-	--default-language=pt_BR \
-	--db-host=localhost \
-	--db-port=3306 \
-	--db-name=glpi \
-	--db-user=glpi \
-	--db-password="$GLPI_DB_PASSWORD" \
-	--no-interaction
-
 # fix permissions on web dir
 chown root:root /var/www/html/glpi/ -R
 chown www-data:www-data /etc/glpi -R
@@ -128,6 +118,18 @@ find /var/lib/glpi -type f -exec chmod 0644 {} \;
 find /var/lib/glpi -type d -exec chmod 0755 {} \;
 find /var/log/glpi -type f -exec chmod 0644 {} \;
 find /var/log/glpi -type d -exec chmod 0755 {} \;
+
+# glpi initial setup
+sudo -u www-data php /var/www/html/glpi/bin/console db:install \
+	--default-language=pt_BR \
+	--db-host=localhost \
+	--db-port=3306 \
+	--db-name=glpi \
+	--db-user=glpi \
+	--db-password="$GLPI_DB_PASSWORD" \
+	--no-interaction
+
+
 
 # creating the vhost on apache2
 cat << 'EOF' > /etc/apache2/sites-available/glpi.conf
@@ -146,8 +148,8 @@ cat << 'EOF' > /etc/apache2/sites-available/glpi.conf
 EOF
 
 # php parameters
-sed -i 's/^upload_max_filesize = 2M/upload_max_filesize = 200M/' /etc/php/8.*/apache2/php.ini
-sed -i 's/^post_max_size = 8M/post_max_size = 128M/' /etc/php/8.*/apache2/php.ini
+sed -i 's/^upload_max_filesize = 2M/upload_max_filesize = 256M/' /etc/php/8.*/apache2/php.ini
+sed -i 's/^post_max_size = 8M/post_max_size = 256M/' /etc/php/8.*/apache2/php.ini
 sed -i 's/^max_execution_time = 30/max_execution_time = 60/' /etc/php/8.*/apache2/php.ini
 sed -i 's/^;max_input_vars = 1000/max_input_vars = 5000/' /etc/php/8.*/apache2/php.ini
 sed -i 's/^memory_limit = 128M/memory_limit = 256M/' /etc/php/8.*/apache2/php.ini
