@@ -11,7 +11,7 @@ This script install GLPI in an automated way for your convenience.
 ## Installation
 Download and run the installation script.  
 ```
-curl -s https://raw.githubusercontent.com/sysadminbr/instalacao-glpi/refs/heads/main/glpi-ubuntu24.sh | bash  
+curl -s https://raw.githubusercontent.com/sysadminbr/instalacao-glpi/refs/heads/main/glpi11-ubuntu24.sh | bash  
 ```
 
 ## References  
