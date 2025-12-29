@@ -34,7 +34,7 @@ apt install -y apache2 \
 	mariadb-server
 
 # generate mysql_root_password
-export MYSQL_ROOT_PASSWORD=$(openssl rand -base64 16 | tr -d [^:alpha:])
+export MYSQL_ROOT_PASSWORD=$(openssl rand -base64 16 | tr -dc [:alpha:])
 echo $MYSQL_ROOT_PASSWORD > $HOME/mysql_root_password
 
 # mysql setup
@@ -54,7 +54,7 @@ EOF
 mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql mysql
 
 # generate glpi password for mysql
-export GLPI_DB_PASSWORD=$(openssl rand -base64 16 | tr -d [^:alpha:])
+export GLPI_DB_PASSWORD=$(openssl rand -base64 16 | tr -dc [:alpha:])
 echo $GLPI_DB_PASSWORD > $HOME/glpi_db_password
 
 # setup glpi database
